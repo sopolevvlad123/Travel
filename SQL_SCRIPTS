@@ -1,0 +1,154 @@
+CREATE SCHEMA `travel_agency` ; creating shema
+
+
+
+CREATE TABLE `travel_agency`.`tours` (
+  `tour_id` INT NOT NULL AUTO_INCREMENT,
+  `price_num` FLOAT NULL,
+  `price_cur` VARCHAR(10) NULL,
+  `peple_num` INT NULL,
+  `hotel_type` VARCHAR(45) NULL,
+  `max_discount` INT NULL,
+  `current_discount` INT NULL,
+  `tour_status` VARCHAR(45) NULL,
+  `tour_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`tour_id`),
+  UNIQUE INDEX `tour_id_UNIQUE` (`tour_id` ASC)); creating tours table
+  
+  CREATE TABLE `travel_agency`.`users` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC));   creating users table;
+  
+ CREATE TABLE `travel_agency`.`orders` (
+  `order_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `tour_id` INT NOT NULL,
+  `order_date` DATETIME NOT NULL,
+  PRIMARY KEY (`order_id`),
+  UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC)); creating orders table
+  
+  
+  
+  
+  CREATE TABLE `travel_agency`.`currency` (
+  `id` INT NOT NULL,
+  `currency_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+  
+  
+  CREATE TABLE `travel_agency`.`tour_status` (
+  `id` INT NOT NULL,
+  `status_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+  
+  ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+ CREATE TABLE `travel_agency`.`user_role` (
+  `role_id` INT NOT NULL AUTO_INCREMENT,
+  `role_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE INDEX `role_name_UNIQUE` (`role_name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+  
+  CREATE TABLE `travel_agency`.`users` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `user_role` INT NOT NULL,
+  `blocked` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `user_role_idx` (`user_role` ASC),
+  CONSTRAINT `user_role`
+    FOREIGN KEY (`user_role`)
+    REFERENCES `travel_agency`.`user_role` (`role_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+
+CREATE TABLE `travel_agency`.`tour_status` (
+  `status_id` INT NOT NULL AUTO_INCREMENT,
+  `status_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`status_id`),
+  UNIQUE INDEX `status_name_UNIQUE` (`status_name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE `travel_agency`.`currency` (
+  `curr_id` INT NOT NULL,
+  `curr_name` VARCHAR(45) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`curr_id`),
+  UNIQUE INDEX `curr_name_UNIQUE` (`curr_name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+
+CREATE TABLE `travel_agency`.`hotel_type` (
+  `type_id` INT NOT NULL AUTO_INCREMENT,
+  `type_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`type_id`),
+  UNIQUE INDEX `type_name_UNIQUE` (`type_name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE `travel_agency`.`tour_type` (
+  `tour_type_id` INT NOT NULL AUTO_INCREMENT,
+  `tour_type_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`tour_type_id`),
+  UNIQUE INDEX `status_name_UNIQUE` (`tour_type_name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE `travel_agency`.`tours` (
+  `tour_id` INT NOT NULL AUTO_INCREMENT,
+  `tour_name` VARCHAR(45) NOT NULL,
+  `price` DOUBLE NULL,
+  `tour_type` INT NULL,
+  `peope_num` INT NULL,
+  `hotel_type` INT NULL,
+  `max_discount` INT NULL,
+  `current_discount` INT NULL,
+  `status` INT NULL,
+  PRIMARY KEY (`tour_id`),
+  UNIQUE INDEX `tour_name_UNIQUE` (`tour_name` ASC),
+  INDEX `tour_type_idx` (`tour_type` ASC),
+  INDEX `hotel_type_idx` (`hotel_type` ASC),
+  INDEX `status_idx` (`status` ASC),
+  CONSTRAINT `tour_type`
+    FOREIGN KEY (`tour_type`)
+    REFERENCES `travel_agency`.`tour_type` (`tour_type_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `hotel_type`
+    FOREIGN KEY (`hotel_type`)
+    REFERENCES `travel_agency`.`hotel_type` (`type_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `status`
+    FOREIGN KEY (`status`)
+    REFERENCES `travel_agency`.`tour_status` (`status_id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+
+
+  
+  
