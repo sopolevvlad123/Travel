@@ -4,22 +4,26 @@ import java.io.Serializable;
 
 
 public class Tour implements Serializable{
-	private int tourId;
+
+	private static final long serialVersionUID = -7530711839871916698L;
+	
+	private long tourId;
 	private String tourName;
 	private double price;
 	private int tourType;
 	private int peopleNumber;
 	private int hotelType;	
 	private int maxDiscount;
+	private int dicsountStep = 1;
 	private int currentDiscount;
 	private int tourStatus;
 	
 	
 
-	public int getTourId() {
+	public long getTourId() {
 		return tourId;
 	}
-	public void setTourId(int tourId) {
+	public void setTourId(long tourId) {
 		this.tourId = tourId;
 	}
 	public String getTourName() {
@@ -70,13 +74,21 @@ public class Tour implements Serializable{
 	public void setTourStatus(int tourStatus) {
 		this.tourStatus = tourStatus;
 	}
-
+	public int getDicsountStep() {
+		return dicsountStep;
+	}
+	public void setDicsountStep(int dicsountStep) {
+		this.dicsountStep = dicsountStep;
+	}
 	@Override
 	public String toString() {
 		return "Tour [tourId=" + tourId + ", tourName=" + tourName + ", price=" + price + ", tourType=" + tourType
 				+ ", peopleNumber=" + peopleNumber + ", hotelType=" + hotelType + ", maxDiscount=" + maxDiscount
-				+ ", currentDiscount=" + currentDiscount + ", tourStatus=" + tourStatus + "]";
+				+ ", currentDiscount=" + currentDiscount + ", dicsountStep=" + dicsountStep + ", tourStatus="
+				+ tourStatus + "]";
 	}
+
+	
 	
 	
 	

@@ -5,11 +5,20 @@ import java.util.List;
 import com.epam.sopolev.travelAgency.entity.User;
 
 public interface UserDAO {
-	void createUser(String firstName, String lastName, String email, String password,int role,  boolean bloked);
-	User getUser(int userId);
+	boolean createUser(String firstName, String lastName, String email, String password,int role,  boolean bloked, int lang);
+	
+	User getUserById(long userId);
+	
+	User getUserByEmail(String email);
+	
 	List<User> getAllUsers();
-	void updateUser(User user);
-	void deleteUser(int userId);
+	
+	boolean updateUser(User user);
+	
+	boolean deleteUser(long userId);
+	
+	boolean blockUnblockUser(long userId, boolean isBlocked);
+	
 	
 
 }

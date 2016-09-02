@@ -1,23 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <servlet>
-    <servlet-name>TestServlet</servlet-name>
-    <servlet-class>com.epam.sopolev.travelAgency.controllers.TestServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>DAOTest</servlet-name>
-    <servlet-class>com.epam.sopolev.travelAgency.controllers.DAOTestServlet</servlet-class>
-  </servlet>
-  
-  
-  
-  
-  <servlet-mapping>
-    <servlet-name>TestServlet</servlet-name>
-    <url-pattern>/test</url-pattern>
-  </servlet-mapping>
-   <servlet-mapping>
-    <servlet-name>DAOTest</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<context-param>
+		<param-name>logfile</param-name>
+		<param-value>WEB-INF/resources/log4j.properties</param-value>
+	</context-param>
+
+	<!-- SERVLET -->
+	
+	<servlet>
+		<servlet-name>ServletController</servlet-name>
+		<servlet-class>com.epam.sopolev.travelAgency.controllers.ServletController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ServletController</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- SERVLET -->
+
+
+	<!-- LISTENER  -->
+ 	<listener>
+		<listener-class>
+			com.epam.sopolev.travelAgency.listeners.InitialisationListener
+		</listener-class>
+	</listener>
+	
+	<!-- LISTENER  -->
+	
+	<!-- FILTER  -->
+	<filter>
+
+	<filter-name>EncodingFilter</filter-name>
+	<filter-class>
+		com.epam.sopolev.travelAgency.filters.CharsetFilter
+	</filter-class>
+
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+
+</filter>
+
+<filter-mapping>
+	<filter-name>EncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+	
+	
+	
+	<!-- FILTER  -->
+	
+	
+	
+	<!-- JSP  -->
+
+	<jsp-config>
+    <jsp-property-group>
+        <url-pattern>*.jsp</url-pattern>
+        <page-encoding>UTF-8</page-encoding>
+    </jsp-property-group>
+</jsp-config>
+
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/views/welcome.jsp
+	</welcome-file>
+	</welcome-file-list>
+	
+	
+	  <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/views/errorPage.jsp</location>
+    </error-page>
+	
+	
+	
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<jsp-file>/WEB-INF/views/loginPage.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>adminPage</servlet-name>
+		<jsp-file>/WEB-INF/views/adminPage.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminPage</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>registrationPage</servlet-name>
+		<jsp-file>/WEB-INF/views/registration.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>registrationPage</servlet-name>
+		<url-pattern>/registration</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>managerPage</servlet-name>
+		<jsp-file>/WEB-INF/views/managerPage.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>managerPage</servlet-name>
+		<url-pattern>/manager</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>customerPage</servlet-name>
+		<jsp-file>/WEB-INF/views/customerPage.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerPage</servlet-name>
+		<url-pattern>/customer</url-pattern>
+	</servlet-mapping>
+	
+		
+	<!-- JSP  -->
+	
+	
+	
+	
+	
+	<!-- SECURITY -->
+	
+	<login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+        <form-login-page>/WEB-INF/views/loginPage.jsp</form-login-page>
+        <form-error-page>/WEB-INF/views/errorPage.jsp</form-error-page>
+    </form-login-config>
+	</login-config>
+	
+	
+	
+	
+	<security-role><role-name>ADMIN</role-name></security-role>
+	<security-role><role-name>MANAGER</role-name></security-role>
+	<security-role><role-name>CUSTOMER</role-name></security-role>
+	
+	
+	
+<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>ADMIN</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/admin</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+</security-constraint>
+
+
+<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>ADMIN</web-resource-name>
+            <url-pattern>/manager/*</url-pattern>
+            <url-pattern>/manager</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+            <role-name>MANAGER</role-name>
+        </auth-constraint>
+</security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>ADMIN</web-resource-name>
+            <url-pattern>/customer</url-pattern>
+             <url-pattern>/customer/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+            <role-name>MANAGER</role-name>
+            <role-name>CUSTOMER</role-name>
+        </auth-constraint>
+</security-constraint>
+    
+
+
+
+
+
+
+    
+    
+    <resource-ref>
+  	<description>jdbc:mysql://localhost:3306/travel_agency</description>
+  		<res-ref-name>mysql/pooldb</res-ref-name>
+  		<res-type>javax.sql.DataSource</res-type>
+  		<res-auth>Container</res-auth>
+  	<res-sharing-scope>Shareable</res-sharing-scope>
+ 	</resource-ref>
+ 	
+ 
+    
+	
+	
 </web-app>

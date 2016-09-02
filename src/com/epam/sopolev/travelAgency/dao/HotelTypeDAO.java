@@ -5,10 +5,10 @@ import java.util.List;
 import com.epam.sopolev.travelAgency.entity.HotelType;
 
 public interface HotelTypeDAO {
-	void createHotelType(String hotelTypeName);
+	boolean createHotelType(String hotelTypeName);
 	HotelType getHotelType(int hotelTypeId);
 	List<HotelType> getAllHotelTypes ();
-	void updateHotelType(HotelType hotelType);
-	void deleteHotelType(int hotelTypeId);
+	boolean updateHotelType(HotelType hotelType);
+	boolean deleteHotelType(int hotelTypeId);
 
 }

@@ -6,9 +6,9 @@ import com.epam.sopolev.travelAgency.entity.TourType;
 
 
 public interface TourTypeDAO {
-	void createTourType(String tourTypeName);
+	boolean createTourType(String tourTypeName);
 	TourType getTourType(int tourTypeId);
 	List<TourType> getAllTourTypes ();
-	void updateTourType(TourType tourType);
-	void deleteTourType(int tourTypeId);
+	boolean updateTourType(TourType tourType);
+	boolean deleteTourType(int tourTypeId);
 }

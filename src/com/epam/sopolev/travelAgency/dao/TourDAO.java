@@ -6,11 +6,18 @@ import com.epam.sopolev.travelAgency.entity.HotelType;
 import com.epam.sopolev.travelAgency.entity.Tour;
 
 public interface TourDAO {
-	void createTour(String tourName, double price, int tourType, int peopleNumber, int hotelType, int maxDiscount,
+	
+	boolean createTour(String tourName, double price, int tourType, int peopleNumber, int hotelType, int maxDiscount, int discountStep,
 			int currentDiscount, int tourStatus);
-	Tour getTour(int tourId);
+	
+	Tour getTourById(long tourId);
+	
+	Tour getTourByName(String tourName);
+	
 	List<Tour> getAllTours ();
-	void updateTour(Tour tour);
-	void deleteTour(int tourId);
+	
+	boolean updateTour(Tour tour);
+	
+	boolean deleteTour(long tourId);
 	
 }

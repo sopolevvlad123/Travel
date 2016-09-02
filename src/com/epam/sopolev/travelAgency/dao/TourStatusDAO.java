@@ -6,9 +6,9 @@ import com.epam.sopolev.travelAgency.entity.Tour;
 import com.epam.sopolev.travelAgency.entity.TourStatus;
 
 public interface TourStatusDAO {
-	void createTourStatus(String statusName);
+	boolean createTourStatus(String statusName);
 	TourStatus getTourStatus(int statusId);
 	List<TourStatus> getAlltourStatus ();
-	void updateTourStatus(TourStatus tourStatus);
-	void deleteTourStatus(int statusId);
+	boolean updateTourStatus(TourStatus tourStatus);
+	boolean deleteTourStatus(int statusId);
 }
