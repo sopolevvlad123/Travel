@@ -12,9 +12,12 @@ public interface TourDAO {
 	
 	Tour getTourById(long tourId);
 	
-	Tour getTourByName(String tourName);
+	Tour getTourByName(String tourName);	
 	
 	List<Tour> getAllTours ();
+	
+	List<Tour> getFreeTours();
+	
 	
 	boolean updateTour(Tour tour);
 	

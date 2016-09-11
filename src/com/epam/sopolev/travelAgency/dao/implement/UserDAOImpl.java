@@ -22,27 +22,50 @@ public class UserDAOImpl implements UserDAO {
 
 
 	@Override
-	public boolean createUser(String firstName, String lastName, String email, String password, int role, boolean bloked, int lang) {
+	public boolean createUser(String firstName, String lastName, String email, String password, int role, boolean bloked, int lang, String roleName) {
 		
-		try (Connection connection = ConnectionFactory.getConnection();
-				PreparedStatement statement = connection.prepareStatement(SqlConstants.SQL_CREATE_USER)) {
+		try(Connection connection = ConnectionFactory.getConnection()){
 			
-			statement.setString(1, firstName);
-			statement.setString(2, lastName);
-			statement.setString(3, email);
-			statement.setString(4, password);
-			statement.setInt(5, role);
-			statement.setBoolean(6, bloked);
-			statement.setInt(7, lang);
-			statement.execute();
-			
-		} catch (SQLException e) {
+			try(PreparedStatement statementMainData = connection.prepareStatement(SqlConstants.SQL_CREATE_USER);
+				PreparedStatement statementSecurityDataFirstTable = connection.prepareStatement(SqlConstants.SQL_CREATE_USER_SEC_F_T);
+				PreparedStatement statementSecurityDataSecondTable = connection.prepareStatement(SqlConstants.SQL_CREATE_USER_SEC_S_T)) {
+				
+
+				connection.setAutoCommit(false);
+				
+				statementMainData.setString(1, firstName);
+				statementMainData.setString(2, lastName);
+				statementMainData.setString(3, email);
+				statementMainData.setString(4, password);
+				statementMainData.setInt(5, role);
+				statementMainData.setBoolean(6, bloked);
+				statementMainData.setInt(7, lang);
+				
+				statementMainData.execute();
+				
+				statementSecurityDataFirstTable.setString(1, email);
+				statementSecurityDataFirstTable.setString(2, password);
+				
+				statementSecurityDataFirstTable.execute();
+
+				statementSecurityDataSecondTable.setString(1, email);
+				statementSecurityDataSecondTable.setString(2, roleName);
+				
+				statementSecurityDataSecondTable.execute();
+				
+				connection.commit();
+		
+			}catch (SQLException e) {
+				connection.rollback();
+				Logger.getLogger(e.getClass()).log(Level.ERROR, "create user fail", e); 
+				
+			}
+		}catch (SQLException e) {
 			Logger.getLogger(e.getClass()).log(Level.ERROR, "create user fail", e); 
-			return false;
 		}
-		
-		return true;
+		return false;
 	}
+
 
 	@Override
 	public User getUserById(long userId) {

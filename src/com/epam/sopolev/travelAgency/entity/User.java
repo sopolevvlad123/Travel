@@ -1,10 +1,8 @@
 package com.epam.sopolev.travelAgency.entity;
 
-import java.io.Serializable;
 
-public  class User implements Serializable {
-	private static final long serialVersionUID = -6731734021114126260L;
-	
+public  class User  {
+		
 	private long userId;
 	private String firstName;
 	private String lastName;

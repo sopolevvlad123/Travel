@@ -2,10 +2,13 @@ package com.epam.sopolev.travelAgency.entity;
 
 import java.io.Serializable;
 
+public class Tour implements Serializable {
 
-public class Tour implements Serializable{
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -7530711839871916698L;
+	
 	
 	private long tourId;
 	private String tourName;

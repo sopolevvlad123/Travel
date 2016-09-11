@@ -1,8 +1,7 @@
 package com.epam.sopolev.travelAgency.entity;
 
-import java.io.Serializable;
 
-public class UserRole  implements Serializable{
+public class UserRole  {
 
 	private int roleId;
 	private String roleName;

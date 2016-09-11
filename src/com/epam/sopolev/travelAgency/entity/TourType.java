@@ -1,8 +1,7 @@
 package com.epam.sopolev.travelAgency.entity;
 
-import java.io.Serializable;
 
-public class TourType implements Serializable{
+public class TourType {
 	
 	private int typeId;
 	private String typeName;

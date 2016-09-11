@@ -115,6 +115,37 @@ public class TourDAOImpl implements TourDAO{
 		} 
 		return tourList;
 	}
+	
+	
+	@Override
+	public List<Tour> getFreeTours() {
+		List<Tour> tourList = new ArrayList<>();
+		
+		try (Connection connection = ConnectionFactory.getConnection();
+				PreparedStatement statement = connection.prepareStatement(SqlConstants.SQL_GET_FREE_TOURS)) {
+			
+			try (ResultSet resultSet = statement.executeQuery()) {
+				
+				while (resultSet.next()) {
+
+				Tour tour = new Tour();
+					tourList.add(fitTourParams(tour, resultSet));
+
+				}
+				
+				System.out.println("Free tours   " + tourList);
+				return tourList;
+			}
+		} catch (SQLException e) { 
+			System.out.println("Hello");
+			e.printStackTrace();
+			Logger.getLogger(e.getClass()).log(Level.ERROR, "getAll tour fail", e); 
+		} 
+		
+		return tourList;
+	}
+
+	
 
 	
 	@Override
@@ -136,6 +167,7 @@ public class TourDAOImpl implements TourDAO{
 			statement.execute();
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			Logger.getLogger(e.getClass()).log(Level.ERROR, "update tour fail", e); 
 			return false;
 		} 
@@ -168,6 +200,7 @@ public class TourDAOImpl implements TourDAO{
 		tour.setTourType(resultSet.getInt(SqlConstants.SQL_TOUR_TYPE ));
 		tour.setHotelType(resultSet.getInt(SqlConstants.SQL_HOTEL_TYPE));
 		tour.setMaxDiscount(resultSet.getInt(SqlConstants.SQL_MAX_DISCOUNT));
+		tour.setPeopleNumber(resultSet.getInt(SqlConstants.SQL_PEOPLE_NUM));
 		tour.setDicsountStep(resultSet.getInt(SqlConstants.SQL_DISCOUNT_STEP));
 		tour.setCurrentDiscount(resultSet.getInt(SqlConstants.SQL_CUR_DISCOUNT));
 		tour.setTourStatus(resultSet.getInt(SqlConstants.SQL_STATUS));
